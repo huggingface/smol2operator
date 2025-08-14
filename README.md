@@ -225,7 +225,7 @@ We believe in the power of open science and reproducible research. All training 
 
 ### Key Components
 
-1. **Training Recipe** (`recipe.py`): Complete training pipeline for both Phase 1 and Phase 2, including dataset mixture configurations and training orchestration
+1. **Training Recipe** (`recipe.ipynb`): Complete training pipeline for both Phase 1 and Phase 2, including dataset mixture configurations and training orchestration
 2. **Action Conversion System** (`preprocessing/action_conversion.py`): Core unification engine that transforms mobile actions and PyAutoGUI desktop actions into a standardized API format. Features smart coordinate handling, direction detection for scroll actions, and comprehensive parameter normalization
 3. **Function Parser** (`utils/function_parser.py`): Comprehensive utilities for parsing, normalizing, and reconstructing function calls from diverse dataset formats. Supports complex parameter structures, positional arguments, and multiple function call extraction
 4. **Action Space Converter** (`utils/action_space_converter.py`): Flexible tool for adapting the unified action space to custom vocabularies and naming conventions. Enables domain-specific customization through configurable parameter mappings
