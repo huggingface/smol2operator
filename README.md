@@ -8,7 +8,7 @@ In this blog post, we present a comprehensive approach to training vision-langua
 
 Our approach leverages **SmolVLM2-2.2B-Instruct** as the baseline model—a compact yet powerful vision-language model that initially has no grounding capabilities for GUI tasks. This makes it an ideal candidate to demonstrate the effectiveness of our training methodology. Through our two-phase training process, we first instill grounding capabilities in the model, then enhance it with agentic reasoning abilities using Supervised Fine-Tuning (SFT).
 
-We evaluate our approach on established perception benchmarks including **ScreenSpot-v2** and **ScreenSpot-Pro**, which test the model's ability to understand and locate elements within screenshots. Our process is inspired by the [AGUVIS](https://arxiv.org/pdf/2412.04454), and we leverage their carefully curated datasets to build upon their foundational work.
+We evaluate our approach on established perception benchmarks including **ScreenSpot-v2** and **ScreenSpot-Pro**, which test the model's ability to understand and locate elements within screenshots. Our process is inspired by the [AGUVIS](https://arxiv.org/pdf/2412.04454) paper, and we leverage their carefully curated datasets to build upon their foundational work.
 
 ## 1. Data Transformation and Unified Action Space
 
@@ -224,38 +224,7 @@ Phase 2 training yielded significant improvements in:
 - Contextual understanding and state maintenance
 - Error recovery and adaptive behavior
 
-## 4. Integration: Building an Agentic Framework
-
-### SmoLAgent Integration
-
-With our trained model as the backbone, we developed a complete agentic framework using **SmoLAgent** and **ScreenEnv**. This integration demonstrates the practical application of our trained model in real-world scenarios.
-
-### Action Space Alignment
-
-A critical component of the integration process was aligning our training action space with the framework's execution environment:
-
-1. **Action Space Mapping**: We created mappings between our unified training actions and the framework's execution primitives
-2. **Environment Adaptation**: Customized the ScreenEnv environment to work seamlessly with our model's output format
-3. **Execution Pipeline**: Built a robust pipeline that translates model predictions into actual GUI interactions
-
-### Framework Components
-
-Our agentic integration includes:
-
-- **Perception Module**: Utilizes our Phase 1 trained capabilities for interface understanding
-- **Planning Module**: Leverages Phase 2 agentic reasoning for multi-step task planning  
-- **Execution Module**: Translates plans into concrete actions within the ScreenEnv environment
-- **Feedback Loop**: Incorporates execution results to improve future planning decisions
-
-### Real-World Applications
-
-The integrated system demonstrates effectiveness across various GUI environments:
-- Web browser automation
-- Mobile application interaction
-- Desktop software navigation
-- Cross-platform task execution
-
-## 5. Open Source Training Code
+## 4. Open Source Training Code
 
 We believe in the power of open science and reproducible research. All training code, data processing pipelines, and evaluation scripts are available in our repository:
 
