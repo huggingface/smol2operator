@@ -218,11 +218,6 @@ The Phase 2 training process builds upon the Phase 1 model checkpoint and introd
 
 *[Results pending - to be updated with benchmark scores from Phase 2 training]*
 
-Phase 2 training yielded significant improvements in:
-- Complex task completion rates
-- Multi-step workflow execution
-- Contextual understanding and state maintenance
-- Error recovery and adaptive behavior
 
 ## 4. Open Source Training Code
 
