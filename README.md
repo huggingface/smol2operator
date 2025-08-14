@@ -199,7 +199,7 @@ Our Phase 1 training used the following key parameters:
 
 ### From Perception to Cognition
 
-While Phase 1 equipped our model with grounding capabilities, Phase 2 focuses on developing agentic reasoning—the ability to think before acting. This phase transforms our model from a reactive system that can identify GUI elements into a proactive agent capable of planning and executing complex multi-step interactions.
+While Phase 1 equipped our model with grounding capabilities, Phase 2 focuses on developing agentic reasoning, the ability to think before acting. This phase transforms our model from a reactive system that can identify GUI elements into a proactive agent capable of planning and executing complex multi-step interactions.
 
 ### Enhanced Training Data
 
@@ -243,13 +243,3 @@ Our codebase includes:
 - Comprehensive documentation and examples
 - Pre-processing scripts for dataset preparation with action space customization support
 - Ready-to-use action space converter tool for dataset adaptation
-
-## Conclusion
-
-Our work demonstrates that transforming a zero-capability vision-language model into an effective agentic GUI automation system is not only possible but can be achieved through systematic, multi-phase training. Key contributions include:
-
-1. **Methodology**: A proven two-phase approach that first builds grounding capabilities, then adds agentic reasoning
-2. **Data Unification**: A comprehensive framework featuring automated action conversion from Aguvis/PyAutoGUI formats to a standardized API, with flexible action space adaptation tools
-3. **Customization Tools**: The Action Space Converter enables easy adaptation to custom action vocabularies and domain-specific requirements
-4. **Optimization Insights**: Empirical findings on optimal configurations for GUI model training
-5. **Open Source**: Complete, reproducible training pipeline with customization tools available to the community
