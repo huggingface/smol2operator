@@ -1,0 +1,7 @@
+trl==0.21.0
+transformers==4.55.1
+Pillow==11.3.0
+torchvision==0.23.0
+num2words==0.5.14
+wandb==0.21.1
+python-dotenv==1.1.1
