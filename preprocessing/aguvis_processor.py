@@ -459,7 +459,7 @@ class AguvisDatasetProcessor:
         # Prepare arguments for multiprocessing
         process_args = [
             (config, dataset_path, converted_repo_id, reasoning, deduplicate) 
-            for config in dataset_configs if config.subset_name in ["mind2web-l1", "ui_refexp"]
+            for config in dataset_configs
         ]
         
         # Process configs in parallel with progress tracking
@@ -494,20 +494,18 @@ class AguvisDatasetProcessor:
 def main():
     """Main entry point for the script."""
     # Create dataset configurations
-    # dataset_config_1 = DatasetConfig(
-    #     huggingface_repo_id="xlangai/aguvis-stage1",
-    #     #local_path="./aguvis_raw_stage_1",
-    #     local_path="/fsx/amir_mahla/aguvis_raw_test",
-    #     config_dict=CONFIG_DICT_STAGE_1,
-    #     smolagents_repo_id="smolagents/aguvis-stage-test",
-    #     reasoning=False,
-    #     deduplicate=True,
-    # )
+    dataset_config_1 = DatasetConfig(
+        huggingface_repo_id="xlangai/aguvis-stage1",
+        local_path="./aguvis_raw_stage_1",
+        config_dict=CONFIG_DICT_STAGE_1,
+        smolagents_repo_id="smolagents/aguvis-stage-test",
+        reasoning=False,
+        deduplicate=True,
+    )
     
     dataset_config_2 = DatasetConfig(
         huggingface_repo_id="xlangai/aguvis-stage2",
-        #local_path="./aguvis_raw_stage_2",
-        local_path="/fsx/amir_mahla/aguvis_raw_test",
+        local_path="./aguvis_raw_stage_2",
         config_dict=CONFIG_DICT_STAGE_2,
         smolagents_repo_id="smolagents/aguvis-stage-test",
         reasoning=True,
@@ -518,7 +516,7 @@ def main():
     processor = AguvisDatasetProcessor()
     
     # You can specify max_processes to limit the number of parallel processes
-    # processor.make_dataset_from_original_data(dataset_config_1, max_processes=4)
+    processor.make_dataset_from_original_data(dataset_config_1, max_processes=4)
     processor.make_dataset_from_original_data(dataset_config_2, max_processes=4)
 
 
