@@ -6,6 +6,7 @@ Contains all Pydantic models, configuration classes, and data validation logic.
 from typing import List, Optional, Literal, Any, Dict
 from pydantic import BaseModel, Field, RootModel, field_validator, model_validator
 from PIL import Image
+import json
 from collections import OrderedDict
 
 
@@ -78,7 +79,25 @@ class ConversationData(BaseModel):
 
 
 class ConversationDataList(RootModel[List[ConversationData]]):
-    """Root model for a list of conversation data with validation and deduplication."""
+    """Root model for a list of conversation data with validation and optional deduplication."""
+
+    @classmethod
+    def from_json_with_deduplication(cls, json_str: str, deduplicate: bool = True) -> "ConversationDataList":
+        """Create instance from JSON with deduplication control."""
+        if deduplicate:
+            # Use normal validation with deduplication
+            return cls.model_validate_json(json_str)
+        else:
+            data = json.loads(json_str)
+            conversation_data_list = [ConversationData(**item) for item in data]
+
+            # Create instance directly without triggering model validators
+            instance = cls.__new__(cls)
+            instance.__dict__.update({'root': conversation_data_list})
+            instance.__pydantic_fields_set__ = {'root'}
+            instance.__pydantic_extra__ = {}
+
+            return instance
 
     @model_validator(mode="after")
     def validate_conversation(self):
@@ -178,6 +197,7 @@ class DatasetConfig(BaseModel):
     config_dict: List[Dict[str, Any]]
     smolagents_repo_id: str
     reasoning: bool
+    deduplicate: bool = False
 
 
 class ProcessingConfig(BaseModel):
@@ -192,9 +212,6 @@ class ProcessingConfig(BaseModel):
         subset_name = (
             config["json_path"]
             .replace(".json", "")
-            .replace("-l1", "")
-            .replace("-l2", "")
-            .replace("-l3", "")
         )
         
         return cls(
@@ -207,15 +224,16 @@ class ProcessingConfig(BaseModel):
 # Mobile action space files configuration
 MOBILE_FILES = [
     "android_control.json",
-    "gui-odyssey-l1.json",
-    "aitw-l3.json",
-    "coat.jsonamex-l2.json",
-    "amex-l1.json",
-    "amex-l3.json",
-    "gui-odyssey-l3.json",
     "aitw-l1.json",
     "aitw-l2.json",
+    "aitw-l3.json",
+    "coat.json",
+    "amex-l1.json",
+    "amex-l2.json",
+    "amex-l3.json",
+    "gui-odyssey-l1.json",
     "gui-odyssey-l2.json",
+    "gui-odyssey-l3.json",
 ]
 
 # Stage 1 dataset configuration
@@ -257,6 +275,14 @@ CONFIG_DICT_STAGE_1 = [
 # Stage 2 dataset configuration
 CONFIG_DICT_STAGE_2 = [
     {
+        "json_path": "mind2web-l1.json",
+        "images_folder": "mind2web/",
+    },
+    {
+        "json_path": "mind2web-l2.json",
+        "images_folder": "mind2web/",
+    },
+    {
         "json_path": "mind2web-l3.json",
         "images_folder": "mind2web/",
     },
@@ -265,8 +291,24 @@ CONFIG_DICT_STAGE_2 = [
         "images_folder": "guiact-web-single/images/",
     },
     {
+        "json_path": "guiact-web-multi-l1.json",
+        "images_folder": "guiact-web-multi-v2/images",
+    },
+    {
+        "json_path": "guiact-web-multi-l2.json",
+        "images_folder": "guiact-web-multi-v2/images",
+    },
+    {
         "json_path": "guiact-web-multi-l3.json",
         "images_folder": "guiact-web-multi-v2/images",
+    },
+    {
+        "json_path": "miniwob-l1.json",
+        "images_folder": "images",
+    },
+    {
+        "json_path": "miniwob-l2.json",
+        "images_folder": "images",
     },
     {
         "json_path": "miniwob-l3.json",
@@ -281,12 +323,36 @@ CONFIG_DICT_STAGE_2 = [
         "images_folder": "android_control/images/",
     },
     {
+        "json_path": "gui-odyssey-l1.json",
+        "images_folder": "gui-odyssey/images/",
+    },
+    {
+        "json_path": "gui-odyssey-l2.json",
+        "images_folder": "gui-odyssey/images/",
+    },
+    {
         "json_path": "gui-odyssey-l3.json",
         "images_folder": "gui-odyssey/images/",
     },
     {
+        "json_path": "amex-l1.json",
+        "images_folder": "amex/images/",
+    },
+    {
+        "json_path": "amex-l2.json",
+        "images_folder": "amex/images/",
+    },
+    {
         "json_path": "amex-l3.json",
         "images_folder": "amex/images/",
+    },
+    {
+        "json_path": "aitw-l1.json",
+        "images_folder": "aitw-v1/images/",
+    },
+    {
+        "json_path": "aitw-l2.json",
+        "images_folder": "aitw-v1/images/",
     },
     {
         "json_path": "aitw-l3.json",

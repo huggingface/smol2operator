@@ -20,7 +20,7 @@ from multiprocessing import Pool
 from collections import defaultdict
 
 from tqdm import tqdm
-from datasets import Dataset, concatenate_datasets
+from datasets import Dataset, concatenate_datasets, get_dataset_config_names
 from dotenv import load_dotenv
 from huggingface_hub import login, snapshot_download
 from PIL import Image
@@ -284,7 +284,7 @@ class DataProcessor:
         self.sample_processor = SampleProcessor()
     
     def process_subset(
-        self, config: ProcessingConfig, dataset_path: str
+        self, config: ProcessingConfig, dataset_path: str, deduplicate: bool = True
     ) -> tuple[ConversationDataList, Path]:
         """Process a single dataset subset."""
         subset_name = config.subset_name
@@ -292,7 +292,7 @@ class DataProcessor:
         logger.info(f"Processing split: {subset_name}")
 
         dataset_dir = Path(dataset_path)
-        images_folder = dataset_dir / config.subset_name / config.images_folder
+        images_folder = dataset_dir / config.subset_name.replace("-l1", "").replace("-l2", "").replace("-l3", "") / config.images_folder
 
         if not images_folder.exists():
             logger.warning(f"Images folder not found: {images_folder}")
@@ -301,8 +301,9 @@ class DataProcessor:
 
         json_config_path = dataset_dir / config.json_path
         with open(json_config_path, "r") as f:
-            data = ConversationDataList.model_validate_json(f.read())
-            logger.info(f"Added '{json_config_path}'")
+            # Create ConversationDataList with deduplication control
+            data = ConversationDataList.from_json_with_deduplication(f.read(), deduplicate)
+            logger.info(f"Added '{json_config_path}' (deduplication: {deduplicate})")
 
         return data, images_folder
     
@@ -340,7 +341,6 @@ class SingleConfigProcessor:
     def check_subset_exists(repo_id: str, subset_name: str) -> bool:
         """Check if a subset already exists in the remote dataset."""
         try:
-            from datasets import get_dataset_config_names
             config_names = get_dataset_config_names(repo_id)
             return subset_name in config_names
         except Exception as e:
@@ -348,7 +348,7 @@ class SingleConfigProcessor:
             return False
     
     def process_single_config(
-        self, config: ProcessingConfig, dataset_path: str, smolagents_repo_id: str, reasoning: bool
+        self, config: ProcessingConfig, dataset_path: str, smolagents_repo_id: str, reasoning: bool, deduplicate: bool = True
     ) -> bool:
         """Process a single config in a separate process."""
         try:
@@ -367,7 +367,7 @@ class SingleConfigProcessor:
                 return True
 
             json_path = config.json_path
-            data, image_folder = self.data_processor.process_subset(config, dataset_path)
+            data, image_folder = self.data_processor.process_subset(config, dataset_path, deduplicate)
 
             # Collect all rows first
             rows = []
@@ -449,6 +449,7 @@ class AguvisDatasetProcessor:
         )
         converted_repo_id = dataset_config.smolagents_repo_id
         reasoning = dataset_config.reasoning
+        deduplicate = dataset_config.deduplicate
         
         if max_processes is None:
             max_processes = 1
@@ -457,8 +458,8 @@ class AguvisDatasetProcessor:
         
         # Prepare arguments for multiprocessing
         process_args = [
-            (config, dataset_path, converted_repo_id, reasoning) 
-            for config in dataset_configs
+            (config, dataset_path, converted_repo_id, reasoning, deduplicate) 
+            for config in dataset_configs if config.subset_name in ["mind2web-l1", "ui_refexp"]
         ]
         
         # Process configs in parallel with progress tracking
@@ -493,29 +494,34 @@ class AguvisDatasetProcessor:
 def main():
     """Main entry point for the script."""
     # Create dataset configurations
-    dataset_config_1 = DatasetConfig(
-        huggingface_repo_id="xlangai/aguvis-stage1",
-        local_path="./aguvis_raw_stage_1",
-        config_dict=CONFIG_DICT_STAGE_1,
-        smolagents_repo_id="smolagents/aguvis-stage-1",
-        reasoning=False,
-    )
+    # dataset_config_1 = DatasetConfig(
+    #     huggingface_repo_id="xlangai/aguvis-stage1",
+    #     #local_path="./aguvis_raw_stage_1",
+    #     local_path="/fsx/amir_mahla/aguvis_raw_test",
+    #     config_dict=CONFIG_DICT_STAGE_1,
+    #     smolagents_repo_id="smolagents/aguvis-stage-test",
+    #     reasoning=False,
+    #     deduplicate=True,
+    # )
     
     dataset_config_2 = DatasetConfig(
         huggingface_repo_id="xlangai/aguvis-stage2",
-        local_path="./aguvis_raw_stage_2",
+        #local_path="./aguvis_raw_stage_2",
+        local_path="/fsx/amir_mahla/aguvis_raw_test",
         config_dict=CONFIG_DICT_STAGE_2,
-        smolagents_repo_id="smolagents/aguvis-stage-2",
+        smolagents_repo_id="smolagents/aguvis-stage-test",
         reasoning=True,
+        deduplicate=False,
     )
     
     # Create processor and run
     processor = AguvisDatasetProcessor()
     
     # You can specify max_processes to limit the number of parallel processes
-    processor.make_dataset_from_original_data(dataset_config_1, max_processes=4)
+    # processor.make_dataset_from_original_data(dataset_config_1, max_processes=4)
     processor.make_dataset_from_original_data(dataset_config_2, max_processes=4)
 
 
 if __name__ == "__main__":
+    # python -m preprocessing.aguvis_processor
     main()
