@@ -165,6 +165,8 @@ drag(from_coord=[0.87, 0.423], to_coord=[0.8102, 0.9463])
 
 This unification process was essential for creating coherent training data that allows the model to learn consistent action patterns across diverse GUI environments.
 
+<br>
+
 <div style="
   border: 1px solid #ddd; 
   border-radius: 8px; 
@@ -172,10 +174,8 @@ This unification process was essential for creating coherent training data that 
   margin: 16px 0;
   @media (prefers-color-scheme: dark) { border-color: #555; }
 ">
-<strong>💡 Why Normalized Coordinates?</strong>
-<br>
-Using raw pixel coordinates in text-action datapoint (e.g. <code>click(x=302, y=63)</code>) ties them to a single image size. Vision Language Models (VLMs) often resize images,* causing pixel coordinates to break and require adjustment. *Normalized coordinates (relative to image size) remain valid at any resolution and keep the dataset consistent.*
-</div>
+<strong>💡 Why Normalized Coordinates?</strong> Using raw pixel coordinates in text-action datapoint (e.g. <code>click(x=302, y=63)</code>) ties them to a single image size. Vision Language Models (VLMs) often resize images,* causing pixel coordinates to break and require adjustment. *Normalized coordinates (relative to image size) remain valid at any resolution and keep the dataset consistent.*</em>
+</em></div>
 
 
 ### (Bonus) Custom Action Space Adaptation with Action Space Converter
@@ -668,6 +668,8 @@ Starting from the Phase 1 checkpoint (1152 px resolution, normalized coordinates
 "><strong>Table 2:</strong> <em>Baseline on HuggingFaceTB/SmolVLM2-2.2B-Instruct after Phase 1 finetuning (2 epochs, aguvis-stage-1).</em></p>
 </div>
 
+<br>
+
 <div style="
   border: 1px solid #ddd; 
   border-radius: 8px; 
@@ -675,7 +677,7 @@ Starting from the Phase 1 checkpoint (1152 px resolution, normalized coordinates
   margin: 16px 0;
   @media (prefers-color-scheme: dark) { border-color: #555; }
 ">
-💡  We also reproduced the two-phase training on a much smaller VLM (nanoVLM-460M). Despite its reduced capacity, the model achieved <strong>~58% on ScreenSpot-v2</strong>, demonstrating that the training strategy scales down effectively, <strong>making it SOTA on ScreenSpot-v2 for this model size (460M parameters)</strong>. In addition, aguvis-stage-1 is already included in <a href="https://huggingface.co/datasets/HuggingFaceM4/FineVision">FineVision Dataset</a>!
+💡  <em>We also reproduced the two-phase training on a much smaller VLM (nanoVLM-460M). Despite its reduced capacity, the model achieved <strong>~58% on ScreenSpot-v2</strong>, demonstrating that the training strategy scales down effectively, <strong>making it SOTA on ScreenSpot-v2 for this model size (460M parameters)</strong>. In addition, aguvis-stage-1 is already included in <a href="https://huggingface.co/datasets/HuggingFaceM4/FineVision">FineVision Dataset</a>!</em>
 </div>
 
 
