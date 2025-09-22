@@ -38,7 +38,7 @@
 - [3. Phase 2: From Perception to Cognition](#3-phase-2-from-perception-to-cognition)
   - [Training Data](#training-data-1)
   - [Phase 2 Results](#phase-2-results)
-- [4. Open Source](#4-open-source)
+- [4. All you need is Open Source](#4-all-you-need-is-open-source)
   - [Key Components](#key-components)
 - [5. Conclusion](#5-conclusion)
 - [What Next?](#what-next)
@@ -260,7 +260,7 @@ This tool enables researchers and practitioners to:
 
 The Action Space Converter is particularly valuable for preparing datasets for training, as it ensures consistent action vocabularies across different deployment environments while maintaining compatibility with existing automation frameworks.
 
-### **Transformed and Released Datasets**
+### Transformed and Released Datasets
 
 Through this pipeline, we transform the open-source datasets  [xlangai/aguvis-stage1](https://huggingface.co/datasets/xlangai/aguvis-stage1), [xlangai/aguvis-stage2](https://huggingface.co/datasets/xlangai/aguvis-stage2) into our unified action space (see [here](https://www.notion.so/Smol2Operator-Post-Training-GUI-Agents-for-Computer-Use-Draft-Blog-Post-2701384ebcac8035bbaad69b5b32ed99?pvs=21)). The output of this process is released as two new fully formatted datasets: [smolagents/aguvis-stage-1](https://huggingface.co/datasets/smolagents/aguvis-stage-1) and [smolagents/aguvis-stage-2](https://huggingface.co/datasets/smolagents/aguvis-stage-2).
 
@@ -679,7 +679,7 @@ Starting from the Phase 1 checkpoint (1152 px resolution, normalized coordinates
 </div>
 
 
-## 4. Open Source
+## 4. All you need is Open Source
 
 All training code, data processing pipelines, datasets and model are open source !
 
