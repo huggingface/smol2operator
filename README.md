@@ -174,7 +174,9 @@ This unification process was essential for creating coherent training data that 
   margin: 16px 0;
   @media (prefers-color-scheme: dark) { border-color: #555; }
 ">
-<strong>💡 Why Normalized Coordinates?</strong> Using raw pixel coordinates in text-action datapoint (e.g. <code>click(x=302, y=63)</code>) ties them to a single image size. Vision Language Models (VLMs) often resize images,* causing pixel coordinates to break and require adjustment. *Normalized coordinates (relative to image size) remain valid at any resolution and keep the dataset consistent.*</em>
+<strong>💡 Why Normalized Coordinates?</strong>
+<br>
+Using raw pixel coordinates in text-action datapoint (e.g. <code>click(x=302, y=63)</code>) ties them to a single image size. Vision Language Models (VLMs) often resize images,* causing pixel coordinates to break and require adjustment. *Normalized coordinates (relative to image size) remain valid at any resolution and keep the dataset consistent.*</em>
 </em></div>
 
 
