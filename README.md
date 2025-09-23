@@ -43,7 +43,6 @@ https://github.com/user-attachments/assets/af51ba24-bc9d-431c-b42d-589ff7d134e7
 ">
 <strong>💡 Additional Resources:</strong>
 <br><br>
-• Github repository: <a href="https://github.com/huggingface/aguvis">https://github.com/huggingface/aguvis</a><br>
 • Datasets: <a href="https://huggingface.co/datasets/smolagents/aguvis-stage-1"><code>smolagents/aguvis-stage-1</code></a>, <a href="https://huggingface.co/datasets/smolagents/aguvis-stage-2"><code>smolagents/aguvis-stage-2</code></a>
 </div>
 
