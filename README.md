@@ -4,17 +4,7 @@
 
 ---
 
-<figure style="text-align: center;">
-  <iframe width="560" height="315"
-    src="https://www.youtube.com/embed/Rv1q3OA33eM?si=-LRkSgm5obYl798S"
-    title="YouTube video player" frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-  <figcaption style="font-size:14px; color:#555; margin-top:8px;">
-    This video demonstrates the model obtained through the recipe described below, executing a task end-to-end.
-  </figcaption>
-</figure>
+https://github.com/user-attachments/assets/af51ba24-bc9d-431c-b42d-589ff7d134e7
 
 ---
 
