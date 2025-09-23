@@ -1,12 +1,12 @@
 # Smol2Operator: Post-Training GUI Agents for Computer Use
 
-**TL;DR:** This work shows how a lightweight vision–language model can acquire GUI-grounded skills and evolve into an agentic GUI coder. We release all training recipes, data-processing tools, and datasets to enable full reproducibility and foster further research.
+**TL;DR:** This work shows how a lightweight vision–language model can acquire GUI-grounded skills and evolve into an agentic GUI coder. We release all training recipes, data-processing tools, and datasets to enable full reproducibility and foster further research 🫡.
 
 ---
 
 <figure style="text-align: center;">
   <iframe width="560" height="315"
-    src="https://www.youtube.com/embed/FNoVhqCfcew?si=OEZL2RWrxXMhTbPB"
+    src="https://www.youtube.com/embed/Rv1q3OA33eM?si=-LRkSgm5obYl798S"
     title="YouTube video player" frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen>
@@ -39,7 +39,6 @@
   - [Training Data](#training-data-1)
   - [Phase 2 Results](#phase-2-results)
 - [4. All you need is Open Source](#4-all-you-need-is-open-source)
-  - [Key Components](#key-components)
 - [5. Conclusion](#5-conclusion)
 - [What Next?](#what-next)
 
@@ -60,7 +59,7 @@
 
 ## Introduction
 
-Graphical User Interface (GUI) automation represents one of the most challenging frontiers in computer vision. Developing the ability to understand and interact with user interfaces opens a new era of automation, where AI agents navigating mobile, desktop, and web platforms could reshape the future of digital interaction.
+Graphical User Interface (GUI) automation is one of the most challenging frontiers in computer vision. Developing models that see and interact with user interfaces enables AI agents to navigate mobile, desktop, and web platforms. This will reshape the future of digital interaction.
 
 In this blog post, we present a comprehensive approach to training vision-language models for GUI automation through a multi-phase training strategy. We demonstrate how to transform a model with zero grounding capabilities into an agentic coder capable of understanding and interacting with graphical interfaces.
 
@@ -68,7 +67,7 @@ Rather than aiming for a SOTA model, our goal is to demonstrate the entire proce
 
 <div align="center">
 
-![GUI capabilities combine understanding of the interface and precise element localization. These abilities enable the model to translate high-level tasks into low-level GUI actions such as clicking, typing, …](assets/Screenshot_2025-09-19_at_15.27.44.png)
+![GUI capabilities combine understanding of the interface and precise element localization. These abilities enable the model to translate high-level tasks into low-level GUI actions such as clicking, typing, …](assets/google.png)
 <p style="
   font-size: 0.85em; 
   color: #666; 
@@ -85,11 +84,11 @@ Rather than aiming for a SOTA model, our goal is to demonstrate the entire proce
 
 Our approach leverages [**SmolVLM2-2.2B-Instruct**](https://huggingface.co/HuggingFaceTB/SmolVLM2-2.2B-Instruct) as the baseline model, a small powerful vision-language model that initially has no grounding capabilities for GUI tasks. This makes it an ideal candidate to demonstrate the effectiveness of our training methodology. Through our two-phase training process, we first instill grounding capabilities in the model, then enhance it with agentic reasoning abilities using Supervised Fine-Tuning (SFT).
 
-We evaluate our approach on an established perception benchmark: **ScreenSpot-v2**, which test the model’s ability to understand and locate elements within screenshots. Our process is inspired by the [AGUVIS](https://huggingface.co/papers/2412.04454) paper, and we leverage their carefully curated datasets to build upon their foundational work.
+We evaluate our approach on an established perception benchmark: [**ScreenSpot-v2**](https://huggingface.co/datasets/HongxinLi/ScreenSpot_v2), which tests the model’s ability to understand and locate elements within screenshots. Our process is inspired by the [AGUVIS](https://huggingface.co/papers/2412.04454) paper, and we leverage their carefully curated datasets to build upon their foundational work.
 
 <div align="center">
 
-![Evolution of ScreenSpot-v2 performance during the training phase of the base model SmolVLM2-2.2B-Instruct.](assets/Screenshot_2025-09-19_at_15.56.13.png)
+![Evolution of ScreenSpot-v2 performance during the training phase of the base model SmolVLM2-2.2B-Instruct.](assets/screenspot-v2.png)
 <p style="
   font-size: 0.85em; 
   color: #666; 
@@ -589,7 +588,7 @@ Phase 2 uses the [smolagents/aguvis-stage-2](https://huggingface.co/datasets/smo
 
 - **High-level instructions** require multi-step, low-level actions.
 
-for example, the [smolagents/aguvis-stage-2](https://huggingface.co/datasets/smolagents/aguvis-stage-2) chat message is like this:
+For example, the [smolagents/aguvis-stage-2](https://huggingface.co/datasets/smolagents/aguvis-stage-2) chat message is like this:
 
 ```json
 {
@@ -685,9 +684,7 @@ Starting from the Phase 1 checkpoint (1152 px resolution, normalized coordinates
 
 ## 4. All you need is Open Source
 
-All training code, data processing pipelines, datasets and model are open source !
-
-### Key Components
+All training code, data processing pipelines, datasets and model are open-source!
 
 1. **Training Recipe** ([`recipe.ipynb`](https://github.com/huggingface/aguvis/blob/main/recipe.ipynb)): Complete training pipeline for both Phase 1 and Phase 2, including dataset mixture configurations and training orchestration. We leverage the [TRL](https://huggingface.co/docs/trl/en/index) library to train our models.
 2. **Datasets** ([`smolagents/aguvis-stage-1`](https://huggingface.co/datasets/smolagents/aguvis-stage-1), [`smolagents/aguvis-stage-2`](https://huggingface.co/datasets/smolagents/aguvis-stage-2)): all datasets used are open-source.
@@ -709,10 +706,8 @@ All training code, data processing pipelines, datasets and model are open source
 
 ## 5. Conclusion
 
-Our experiments demonstrate that high-quality, reasoning-oriented data can substantially improve GUI grounding, even for small VLMs, using only supervised fine-tuning (SFT). Beyond raw performance gains, these results show that the capabilities of a “GUI model” are largely determined by the structure of the data (i.e., the action space), which in turn instills within the model an internal representation of the user interface and the spatial organization of its interactive elements.
+Our experiments demonstrate that high-quality, reasoning-oriented data can substantially improve GUI grounding, even for small VLMs, using only supervised fine-tuning (SFT). Beyond raw performance gains, these results show that the capabilities of a "GUI model" are largely determined by the quality of the data. High-quality, task-specific data for GUI interactions is a critical prerequisite for advancing agentic models. Carefully curated datasets teach models the structure and semantics of user interfaces, providing the grounding needed for accurate action prediction.
 
-## What next?
+While SFT excels at supervised tasks, emerging methods such as Reinforcement Learning (RL) or Direct Preference Optimization (DPO) support deeper reasoning and enable dynamic, real-time adaptation. These advances point toward a new generation of GUI agents that learn and improve through interaction rather than relying solely on static datasets.
 
-High-quality, task-specific data for GUI interactions is a critical prerequisite for advancing agentic models. Carefully curated datasets teach models the structure and semantics of interfaces while providing the grounding needed for accurate action prediction and evaluation.
-
-In addition, recent studies have also explored reinforcement learning (RL) and direct preference optimization (DPO) to enhance reasoning, planning, consistency, and execution in end-to-end agentic models. These approaches appear better suited to online, dynamic environments compared to SFT, signaling a new generation of GUI-grounded agents optimized through reinforcement-based methods, enabling richer reasoning and more reliable execution.
+To support the development of GUI agents, we’re open-sourcing everything: our complete pipeline, datasets, and trained model. You can reproduce our results, experiment with different models and architectures, or adapt our approach to new domains. The future of agentic AI depends on researchers like you pushing these boundaries further 🤗
