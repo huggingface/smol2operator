@@ -80,7 +80,7 @@ def wait(seconds: float) -> str:
 MOBILE_ACTIONS = """
 def navigate_back() -> str:
     \"\"\"
-    Return to home page
+    Navigates back to the previous screen.
     \"\"\"
 
 def open_app(app_name: str) -> str:
